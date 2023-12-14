@@ -6,6 +6,6 @@ cd ckan-data-loader;
 #git checkout pgml_data_script;
 pip install -r requirements.txt
 echo "Run data population script in the background"
-source ./pgml_data_script.sh &
+source ./prepopulate_data_script.sh &
 
 
