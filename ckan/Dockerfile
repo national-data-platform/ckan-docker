@@ -13,8 +13,8 @@ RUN  pip3 install -e git+https://github.com/ckan/ckanext-dcat.git@v1.5.1#egg=cka
     pip3 install -r https://raw.githubusercontent.com/ckan/ckanext-dcat/v1.5.1/requirements.txt
 
 ### NDP Keycloak Ext ###
-RUN  pip3 install -e git+https://github.com/national-data-platform/ckanext-keycloak.git@v0.1.0#egg=ckanext-keycloak && \
-    pip3 install -r https://raw.githubusercontent.com/national-data-platform/ckanext-keycloak/v0.1.0/requirements.txt
+RUN  pip3 install -e git+https://github.com/national-data-platform/ckanext-keycloak.git@v0.3.0#egg=ckanext-keycloak && \
+    pip3 install -r https://raw.githubusercontent.com/national-data-platform/ckanext-keycloak/v0.3.0/requirements.txt
 
 ## NDP Main Ext ###
 RUN  pip3 install -e git+https://github.com/national-data-platform/ckanext-ndp.git@v0.1.0#egg=ckanext-ndp && \
