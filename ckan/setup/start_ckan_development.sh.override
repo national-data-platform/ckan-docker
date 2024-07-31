@@ -43,7 +43,7 @@ done
 
 # Set debug to true
 echo "Enabling debug mode"
-ckan config-tool $CKAN_INI -s DEFAULT "debug = true"
+ckan config-tool $CKAN_INI -s DEFAULT "debug = False"
 
 # Add ckan.datapusher.api_token to the CKAN config file (updated with corrected value later)
 ckan config-tool $CKAN_INI ckan.datapusher.api_token=xxx
