@@ -35,8 +35,8 @@ RUN  pip3 install -e git+https://github.com/national-data-platform/ckanext-ndpca
     pip3 install -r https://raw.githubusercontent.com/national-data-platform/ckanext-ndpcatalogadditions/v0.1.0/requirements.txt
 
 ## NDP Main Ext ###
-#RUN  pip3 install -e git+https://github.com/national-data-platform/ckanext-ndp.git@v0.1.0#egg=ckanext-ndp && \
-#    pip3 install -r https://raw.githubusercontent.com/national-data-platform/ckanext-ndp/v0.1.0/requirements.txt
+RUN  pip3 install -e git+https://github.com/national-data-platform/ckanext-ndp.git@v0.1.0#egg=ckanext-ndp && \
+    pip3 install -r https://raw.githubusercontent.com/national-data-platform/ckanext-ndp/v0.1.0/requirements.txt
 
 ## Geoview Extention ###
 #RUN  pip3 install ckanext-geoview
