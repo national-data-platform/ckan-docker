@@ -1,4 +1,4 @@
-FROM ckan/ckan-dev:2.10.1
+FROM ckan/ckan-base:2.10.1
 
 # Install any extensions needed by your CKAN instance
 # - Make sure to add the plugins to CKAN__PLUGINS in the .env file
@@ -12,33 +12,35 @@ FROM ckan/ckan-dev:2.10.1
 # For instance:
 #
 ### XLoader ###
-#RUN pip3 install -e 'git+https://github.com/ckan/ckanext-xloader.git@master#egg=ckanext-xloader' && \ 
+#RUN pip3 install -e 'git+https://github.com/ckan/ckanext-xloader.git@master#egg=ckanext-xloader' && \
 #    pip3 install -r ${APP_DIR}/src/ckanext-xloader/requirements.txt && \
 #    pip3 install -U requests[security]
 
 ### Harvester ###
-RUN pip3 install -e 'git+https://github.com/ckan/ckanext-harvest.git@v1.5.6#egg=ckanext-harvest' && \
-   pip3 install -r ${APP_DIR}/src/ckanext-harvest/pip-requirements.txt
+#RUN pip3 install -e 'git+https://github.com/ckan/ckanext-harvest.git@v1.5.6#egg=ckanext-harvest' && \
+#   pip3 install -r ${APP_DIR}/src/ckanext-harvest/pip-requirements.txt
 # will also require gather_consumer and fetch_consumer processes running (please see https://github.com/ckan/ckanext-harvest)
 
-### Scheming ###
-#RUN  pip3 install -e 'git+https://github.com/ckan/ckanext-scheming.git@master#egg=ckanext-scheming'
-
-### Pages ###
-#RUN  pip3 install -e git+https://github.com/ckan/ckanext-pages.git#egg=ckanext-pages
-
 ### DCAT ###
-RUN  pip3 install -e git+https://github.com/ckan/ckanext-dcat.git@v1.5.1#egg=ckanext-dcat && \
-    pip3 install -r https://raw.githubusercontent.com/ckan/ckanext-dcat/v1.5.1/requirements.txt
+#RUN  pip3 install -e git+https://github.com/ckan/ckanext-dcat.git@v1.5.1#egg=ckanext-dcat && \
+#    pip3 install -r https://raw.githubusercontent.com/ckan/ckanext-dcat/v1.5.1/requirements.txt
+
+### NDP Keycloak Ext ###
+RUN  pip3 install -e git+https://github.com/national-data-platform/ckanext-keycloak.git@v0.3.0#egg=ckanext-keycloak && \
+    pip3 install -r https://raw.githubusercontent.com/national-data-platform/ckanext-keycloak/v0.3.0/requirements.txt
+
+## NDP Main Ext ###
+#RUN  pip3 install -e git+https://github.com/national-data-platform/ckanext-ndp.git@v0.1.0#egg=ckanext-ndp && \
+#    pip3 install -r https://raw.githubusercontent.com/national-data-platform/ckanext-ndp/v0.1.0/requirements.txt
 
 ## Geoview Extention ###
-RUN  pip3 install ckanext-geoview
+#RUN  pip3 install ckanext-geoview
 
 # Clone the extension(s) your are writing for your own project in the `src` folder
 # to get them mounted in this image at runtime
 
 # Copy custom initialization scripts
-COPY docker-entrypoint.d/* /docker-entrypoint.d/
+COPY docker-entrypoint.d/01_setup_datapusher.sh /docker-entrypoint.d/
 
 # Apply any patches needed to CKAN core or any of the built extensions (not the
 # runtime mounted ones)
