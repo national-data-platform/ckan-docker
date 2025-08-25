@@ -30,6 +30,8 @@ services:
     volumes:
       - ckan_storage:/var/lib/ckan
       - ./src:/srv/app/src_extensions
+      - ./supervisord/ckan_harvesting.conf:/etc/supervisord.d/ckan_harvesting.conf
+      - ./logs:/srv/app/logs
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "wget", "-qO", "/dev/null", "http://localhost:5000"]
