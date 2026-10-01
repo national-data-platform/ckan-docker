@@ -1,4 +1,4 @@
-FROM ckan/ckan-dev:2.10.1
+FROM ckan/ckan-dev:2.10.11
 
 # Install any extensions needed by your CKAN instance
 # - Make sure to add the plugins to CKAN__PLUGINS in the .env file
@@ -51,3 +51,10 @@ RUN for d in $APP_DIR/patches/*; do \
             done ; \
         fi ; \
     done
+
+# Fix for 2.10.11 dev image: startup script expects ckan in /usr/local/bin
+RUN ln -sf /usr/bin/ckan /usr/local/bin/ckan
+
+# Install mounted extensions before starting CKAN
+COPY --chmod=755 install_src_extensions.sh /srv/app/install_src_extensions.sh
+CMD ["/srv/app/install_src_extensions.sh"]
