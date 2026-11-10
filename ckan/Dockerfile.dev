@@ -1,4 +1,5 @@
-FROM ckan/ckan-dev:2.10.11
+FROM ckan/ckan-dev:2.11.7
+USER root
 
 # Install any extensions needed by your CKAN instance
 # - Make sure to add the plugins to CKAN__PLUGINS in the .env file
@@ -17,8 +18,8 @@ FROM ckan/ckan-dev:2.10.11
 #    pip3 install -U requests[security]
 
 ### Harvester ###
-RUN pip3 install -e 'git+https://github.com/ckan/ckanext-harvest.git@v1.5.6#egg=ckanext-harvest' && \
-   pip3 install -r ${APP_DIR}/src/ckanext-harvest/pip-requirements.txt
+RUN pip3 install -e 'git+https://github.com/ckan/ckanext-harvest.git@v1.6.2#egg=ckanext-harvest' && \
+    if [ -f ${APP_DIR}/src/ckanext-harvest/pip-requirements.txt ]; then pip3 install -r ${APP_DIR}/src/ckanext-harvest/pip-requirements.txt; fi
 # will also require gather_consumer and fetch_consumer processes running (please see https://github.com/ckan/ckanext-harvest)
 
 ### Scheming ###
@@ -28,8 +29,7 @@ RUN pip3 install -e 'git+https://github.com/ckan/ckanext-harvest.git@v1.5.6#egg=
 #RUN  pip3 install -e git+https://github.com/ckan/ckanext-pages.git#egg=ckanext-pages
 
 ### DCAT ###
-RUN  pip3 install -e git+https://github.com/ckan/ckanext-dcat.git@v1.5.1#egg=ckanext-dcat && \
-    pip3 install -r https://raw.githubusercontent.com/ckan/ckanext-dcat/v1.5.1/requirements.txt
+RUN pip3 install -e 'git+https://github.com/ckan/ckanext-dcat.git@v2.4.2#egg=ckanext-dcat'
 
 ## Geoview Extention ###
 RUN  pip3 install ckanext-geoview
@@ -52,9 +52,7 @@ RUN for d in $APP_DIR/patches/*; do \
         fi ; \
     done
 
-# Fix for 2.10.11 dev image: startup script expects ckan in /usr/local/bin
-RUN ln -sf /usr/bin/ckan /usr/local/bin/ckan
 
 # Install mounted extensions before starting CKAN
 COPY --chmod=755 install_src_extensions.sh /srv/app/install_src_extensions.sh
-CMD ["/srv/app/install_src_extensions.sh"]
+CMD ["bash", "/srv/app/install_src_extensions.sh"]
