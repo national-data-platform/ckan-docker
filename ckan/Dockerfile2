@@ -1,4 +1,5 @@
-FROM ckan/ckan-base:2.10.11
+FROM ckan/ckan-base:2.11.7
+USER root
 
 # Install any extensions needed by your CKAN instance
 # - Make sure to add the plugins to CKAN__PLUGINS in the .env file
