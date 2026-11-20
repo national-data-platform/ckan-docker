@@ -1,16 +1,16 @@
-FROM ckan/ckan-base:2.10.1
+FROM ckan/ckan-base:2.11.7
+USER root
 
 # Install any extensions needed by your CKAN instance
 # See Dockerfile.dev for more details and examples
 
 ### Harvester ###
-RUN pip3 install -e 'git+https://github.com/ckan/ckanext-harvest.git@v1.5.6#egg=ckanext-harvest' && \
-   pip3 install -r ${APP_DIR}/src/ckanext-harvest/pip-requirements.txt
+RUN pip3 install -e 'git+https://github.com/ckan/ckanext-harvest.git@v1.6.2#egg=ckanext-harvest' && \
+    if [ -f ${APP_DIR}/src/ckanext-harvest/pip-requirements.txt ]; then pip3 install -r ${APP_DIR}/src/ckanext-harvest/pip-requirements.txt; fi
 # will also require gather_consumer and fetch_consumer processes running (please see https://github.com/ckan/ckanext-harvest)
 
 ### DCAT ###
-RUN  pip3 install -e git+https://github.com/ckan/ckanext-dcat.git@v1.5.1#egg=ckanext-dcat && \
-    pip3 install -r https://raw.githubusercontent.com/ckan/ckanext-dcat/v1.5.1/requirements.txt
+RUN pip3 install -e 'git+https://github.com/ckan/ckanext-dcat.git@v2.4.2#egg=ckanext-dcat'
 
 ### NDP Keycloak Ext ###
 RUN  pip3 install -e git+https://github.com/national-data-platform/ckanext-keycloak.git@v0.3.0#egg=ckanext-keycloak && \
